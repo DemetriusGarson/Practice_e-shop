@@ -62,6 +62,7 @@ export function renderProductInModal({
         <button class="modal-product__buy-btn" type="button">Buy</button>
       </div>`;
   refs.modalProduct.innerHTML = markup;
+  //дадати функцiонал перевiрки присутностi даного продукта в наших списках кошика та списку бажаного для оновлення статусу конопок
 }
 
 export function hideNotFound() {

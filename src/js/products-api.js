@@ -24,12 +24,15 @@ export function getProductsByCategory(category) {
 }
 
 export function getProductById(id) {
+  return axios.get(`${API_ENDPOINTS.PRODUCT_BY_ID}${id}`).then(({ data }) => {
+    return data;
+  });
+}
+
+export function getProductsBySearchValue(searchValue) {
   return axios
-    .get(`${API_ENDPOINTS.PRODUCT_BY_ID}${id}`)
+    .get(`${API_ENDPOINTS.PRODUCTS_BY_SEARCH}?q=${searchValue}`)
     .then(({ data }) => {
       return data;
-    })
-    .catch(error => {
-      console.log(error);
     });
 }

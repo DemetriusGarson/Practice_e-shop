@@ -1,10 +1,12 @@
-import { toggleActiveClass } from './helpers';
+import iziToast from 'izitoast';
+import { showToast, toggleActiveClass } from './helpers';
 import { openModal } from './modal';
 import {
   getCategories,
   getProductById,
   getProducts,
   getProductsByCategory,
+  getProductsBySearchValue,
 } from './products-api';
 import { refs } from './refs';
 import {
@@ -15,6 +17,7 @@ import {
   renderProducts,
   showNotFound,
 } from './render-function';
+import { isInCart } from './storage';
 
 let currentProductId = null;
 
@@ -29,7 +32,6 @@ export function initHomePage() {
 
   getProducts()
     .then(({ products }) => {
-      console.log(products);
       renderProducts(products);
     })
     .catch(error => {
@@ -94,9 +96,56 @@ export function handleProductListClick(event) {
   currentProductId = productId;
   getProductById(productId)
     .then(product => {
-      console.log(product);
       openModal();
       renderProductInModal(product);
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function handleSearchFormSubmit(event) {
+  event.preventDefault();
+  const searchValue = event.target.elements.searchValue.value.trim();
+  console.log(searchValue);
+  if (searchValue === '') {
+    showToast('Please enter search valid query', 'warning');
+    return;
+  }
+  getProductsBySearchValue(searchValue)
+    .then(({ products }) => {
+      clearProductsList();
+      if (products.length > 0) {
+        renderProducts(products);
+        hideNotFound();
+      } else {
+        showNotFound();
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      showNotFound();
+    });
+}
+
+export function handleSearchClear() {
+  refs.searchForm.reset();
+  clearProductsList();
+  getProducts()
+    .then(({ products }) => {
+      renderProducts(products);
+      hideNotFound();
+    })
+    .catch(error => {
+      console.log('помилка рендеру продуктiв');
+    });
+}
+
+export function handleAddToCartClick() {
+  if (!currentProductId) {
+    return;
+  }
+  if (isInCart(currentProductId)) {
+    //закончили здесь в пятницу
+  }
 }
