@@ -1,12 +1,21 @@
-import"./assets/styles-JE8YjOlG.js";import{a as n}from"./assets/vendor-N5iQpiFS.js";function d(t,e,o){t.forEach(s=>{s.classList.remove(o)}),e.classList.add(o)}const g="https://dummyjson.com",a={CATEGORIES:"/products/category-list",PRODUCTS:"/products"};n.defaults.baseURL=g;function _(){return n.get(a.CATEGORIES).then(({data:t})=>t)}function p(){return n.get(a.PRODUCTS).then(({data:t})=>t)}const c={categoriesList:document.querySelector(".categories"),productsList:document.querySelector(".products")};function m(t){const o=["All",...t].map(r=>`<li class="categories__item">
-        <button class="categories__btn" type="button">${r}</button>
-      </li>`).join("");c.categoriesList.innerHTML=o;const s=document.querySelector(".categories__btn");s&&s.classList.add("categories__btn--active")}function L(t){const e=t.map(({id:o,thumbnail:s,title:r,brand:i,category:l,price:u})=>`<li class="products__item" data-id="${o}">
-          <img class="products__image" src="${s}" alt="${r}" />
-          <p class="products__title">${r}</p>
+import"./assets/styles-Dt4zwTEg.js";import{a as r}from"./assets/vendor-N5iQpiFS.js";function v(t,o,s){t.forEach(e=>{e.classList.remove(s)}),o.classList.add(s)}const n={categoriesList:document.querySelector(".categories"),productsList:document.querySelector(".products"),notFound:document.querySelector(".not-found"),modal:document.querySelector(".modal"),modalCloseButton:document.querySelector(".modal__close-btn"),modalProduct:document.querySelector(".modal-product")};function E(){n.modal.classList.add("modal--is-open"),document.body.style.overflow="hidden",document.addEventListener("keydown",f),n.modalCloseButton.addEventListener("click",y),n.modal.addEventListener("click",L)}function p(){n.modal.classList.remove("modal--is-open"),document.body.style.overflow="",document.removeEventListener("keydown",f),n.modalCloseButton.removeEventListener("click",y),n.modal.removeEventListener("click",L)}function f(t){console.log(t.code),t.code==="Escape"&&p()}function y(){p()}function L(t){t.target===n.modal&&p()}const S="https://dummyjson.com",l={CATEGORIES:"/products/category-list",PRODUCTS:"/products",PRODUCTS_BY_CATEGORY:"/products/category/",PRODUCT_BY_ID:"/products/"};r.defaults.baseURL=S;function k(){return r.get(l.CATEGORIES).then(({data:t})=>t)}function h(){return r.get(l.PRODUCTS).then(({data:t})=>t)}function B(t){return r.get(`${l.PRODUCTS_BY_CATEGORY}${t}`).then(({data:o})=>o)}function T(t){return r.get(`${l.PRODUCT_BY_ID}${t}`).then(({data:o})=>o).catch(o=>{console.log(o)})}function R(t){const s=["All",...t].map(c=>`<li class="categories__item">
+        <button class="categories__btn" type="button">${c}</button>
+      </li>`).join("");n.categoriesList.innerHTML=s;const e=document.querySelector(".categories__btn");e&&e.classList.add("categories__btn--active")}function u(t){const o=t.map(({id:s,thumbnail:e,title:c,brand:a,category:d,price:i})=>`<li class="products__item" data-id="${s}">
+          <img class="products__image" src="${e}" alt="${c}" />
+          <p class="products__title">${c}</p>
           <p class="products__brand">
-            <span class="products__brand--bold">Brand: ${i}</span>
+            <span class="products__brand--bold">Brand: ${a}</span>
           </p>
-          <p class="products__category">Category: ${l}</p>
-          <p class="products__price">Price: ${u}$</p>
-        </li>`).join("");c.productsList.insertAdjacentHTML("beforeend",e)}function f(){_().then(t=>{m(t)}).catch(t=>{console.log("помилка запиту сторiнки home",t)}),p().then(({products:t})=>{console.log(t),L(t)}).catch(t=>{console.log("помилка рендеру продуктiв")})}function b(t){const e=t.target.closest(".categories__btn");if(console.log(e),!e)return;const o=c.categoriesList.querySelectorAll(".categories__btn");d(o,e,"categories__btn--active")}document.addEventListener("DOMContentLoaded",f);c.categoriesList.addEventListener("click",b);
+          <p class="products__category">Category: ${d}</p>
+          <p class="products__price">Price: ${i}$</p>
+        </li>`).join("");n.productsList.insertAdjacentHTML("beforeend",o)}function A({id:t,thumbnail:o,title:s,brand:e,category:c,price:a,description:d,shippingInformation:i,returnPolicy:C,tags:m}){const b=m?m.map($=>`<li class="modal-product__tag">${$}</li>`).join(""):"",P=`<img class="modal-product__img" src="${o}" alt="${s}" />
+      <div class="modal-product__content">
+        <p class="modal-product__title">${s}</p>
+        <ul class="modal-product__tags">${b}</ul>
+        <p class="modal-product__description">${d}</p>
+        <p class="modal-product__shipping-information">Shipping: ${i}</p>
+        <p class="modal-product__return-policy">Return Policy: ${C}</p>
+        <p class="modal-product__price">Price: ${a}$</p>
+        <button class="modal-product__buy-btn" type="button">Buy</button>
+      </div>`;n.modalProduct.innerHTML=P}function g(){n.notFound.classList.remove("not-found--visible")}function _(){n.notFound.classList.add("not-found--visible")}function O(){n.productsList.innerHTML=""}function I(){k().then(t=>{R(t)}).catch(t=>{console.log("помилка запиту сторiнки home",t)}),h().then(({products:t})=>{console.log(t),u(t)}).catch(t=>{console.log("помилка рендеру продуктiв")})}function D(t){const o=t.target.closest(".categories__btn");if(console.log(o),!o)return;O();const s=n.categoriesList.querySelectorAll(".categories__btn");v(s,o,"categories__btn--active");const e=o.textContent.trim();console.log(e),e==="All"?h().then(({products:c})=>{console.log(c),g(),u(c)}).catch(c=>{console.log("помилка рендеру продуктiв")}):B(e).then(({products:c})=>{c.length>0?(g(),u(c)):_()}).catch(c=>{_(),console.log(c)})}function M(t){const o=t.target.closest(".products__item");if(!o)return;const s=Number(o.dataset.id);T(s).then(e=>{console.log(e),E(),A(e)}).catch(e=>console.log(e))}document.addEventListener("DOMContentLoaded",I);n.categoriesList.addEventListener("click",D);n.productsList.addEventListener("click",M);
 //# sourceMappingURL=index.js.map
