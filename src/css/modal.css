@@ -104,7 +104,7 @@
   list-style: none;
 }
 
-.modal-product__tags li {
+.modal-product__tag {
   padding: 0.3rem 0.8rem;
 
   color: white;
