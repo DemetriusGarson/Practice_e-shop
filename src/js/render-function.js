@@ -1,4 +1,5 @@
 import { refs } from './refs';
+import { isInCart, isInWishList } from './storage';
 
 export function renderCategories(categories) {
   const allCategories = ['All', ...categories];
@@ -62,7 +63,7 @@ export function renderProductInModal({
         <button class="modal-product__buy-btn" type="button">Buy</button>
       </div>`;
   refs.modalProduct.innerHTML = markup;
-  //дадати функцiонал перевiрки присутностi даного продукта в наших списках кошика та списку бажаного для оновлення статусу конопок
+  updateModalButtons(id);
 }
 
 export function hideNotFound() {
@@ -75,4 +76,31 @@ export function showNotFound() {
 
 export function clearProductsList() {
   refs.productsList.innerHTML = '';
+}
+
+export function showLoader() {
+  refs.loader.classList.remove('is-hidden');
+}
+
+export function hideLoader() {
+  refs.loader.classList.add('is-hidden');
+}
+
+export function updateModalButtons(productId) {
+  if (isInCart(productId)) {
+    refs.addToCartBtn.textContent = 'Remove from Cart';
+  } else {
+    refs.addToCartBtn.textContent = 'Add to Cart';
+  }
+
+  if (isInWishList(productId)) {
+    refs.addToWishListBtn.textContent = 'Remove from WishList';
+  } else {
+    refs.addToWishListBtn.textContent = 'Add to Wishlist';
+  }
+}
+
+export function updateCounters(cartItems, wishListItems) {
+  refs.cartCount.textContent = cartItems.length;
+  refs.wishListCount.textContent = wishListItems.length;
 }

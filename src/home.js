@@ -2,6 +2,7 @@
 
 import {
   handleAddToCartClick,
+  handleAddToWishListClick,
   handleCategoryClick,
   handleProductListClick,
   handleSearchClear,
@@ -21,4 +22,6 @@ refs.searchForm.addEventListener('submit', handleSearchFormSubmit);
 
 refs.searchFormClearButton.addEventListener('click', handleSearchClear);
 
-refs.AddToCartBtn.addEventListener('click', handleAddToCartClick);
+refs.addToCartBtn.addEventListener('click', handleAddToCartClick);
+
+refs.addToWishListBtn.addEventListener('click', handleAddToWishListClick);
